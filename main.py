@@ -3,7 +3,6 @@ import soundfile as sf
 from pydub import AudioSegment
 import numpy as np
 import matplotlib.pyplot as plt
-import wave
 import scipy.fftpack
 import librosa
 
@@ -13,9 +12,6 @@ amount_of_samples = len(s[:, 0])
 print("Odtwarzam...")
 # sd.play(s, fs)
 status = sd.wait()
-raw = wave.open('Recording.wav')
-signal = raw.readframes(-1)
-signal = np.frombuffer(signal, dtype=np.int16)
 s = s[:, 0]/np.linalg.norm(s[:, 0])
 
 # Parametry dźwieku
@@ -38,6 +34,13 @@ axd['A plot'].plot(time*1000, s, linewidth=0.3)
 
 # Zad 2
 def energia(si):
+    """Funkcja do obliczenia funkcji energii E
+
+    Args:
+        si (list): wektor dźwięku (okno)
+    Returns:
+        float: wartość funkcji energii E
+    """
     ej = 0
     for i in si:
         ej += i**2
@@ -45,6 +48,13 @@ def energia(si):
 
 
 def z(zi):
+    """Funkcja do obliczenia funkcji przejść przez zer Z
+
+    Args:
+        zi (list): wektor dźwięku (okno)
+    Returns:
+        float: wartość funkcji przejść przez zer Z
+    """
     zj = 0
     for i in range(len(zi) - 1):
         if zi[i] * zi[i+1] >= 0:
